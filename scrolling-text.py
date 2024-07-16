@@ -11,10 +11,10 @@ def scrolling_text(text: str):
         if frame <= max_frame:
             output = f"{text[0:frame]:>{max_frame}}"
         else:
-            output = f"{text[frame-max_frame:max_frame]:<{max_frame}}"
+            output = f"{text[frame-max_frame:max_frame]}"
 
         print(f"{ERASE_LINE}{output}", end="")
-        
+ 
         frame += 1
         if frame > max_frame * 2:
             frame = 0
