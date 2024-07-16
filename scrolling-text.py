@@ -5,7 +5,13 @@ import time
 ERASE_LINE = "\033[2K\r"
 
 def scrolling_text(text: str):
-    raise NotImplementedError()
+    frame = 0
+    max_frame = len(text)
+    while 1:
+        output = f"{text[0:frame]:>{max_frame}}"
+        print(f"{ERASE_LINE}{output}", end="")
+        frame += 1
+        time.sleep(0.1)
 
 if __name__ == "__main__":
     scrolling_text(input("> "))
