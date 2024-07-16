@@ -18,7 +18,10 @@ def scrolling_text(text: str):
         frame += 1
         if frame > max_frame * 2:
             frame = 0
+
         time.sleep(0.1)
 
 if __name__ == "__main__":
-    scrolling_text(input("> "))
+    text = input("> ")
+    print(f"\033[1A", end="")
+    scrolling_text(text)
