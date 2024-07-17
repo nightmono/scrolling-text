@@ -5,21 +5,21 @@ import time
 ERASE_LINE = "\033[2K\r"
 
 def scrolling_text(text: str):
-    frame = 0
-    max_frame = len(text)
-    while 1:
-        if frame <= max_frame:
-            output = f"{text[0:frame]:>{max_frame}}"
-        else:
-            output = f"{text[frame-max_frame:max_frame]}"
+    # The text will have 3 states that will need to be handled differently.
+    
+    # Left-end:
+    # Only a portion of the left side of the text is shown
+    # |     This is|
+    
+    # Middle-scroll:
+    # When the entire width is taken up by a portion of the text
+    # |is an exampl|
+    
+    # Right-end:
+    # The end (right) portion scrolling off
+    # |an example  |
 
-        print(f"{ERASE_LINE}{output}", end="")
- 
-        frame += 1
-        if frame > max_frame * 2:
-            frame = 0
-
-        time.sleep(0.1)
+    raise NotImplementedError()
 
 if __name__ == "__main__":
     text = input("> ")
