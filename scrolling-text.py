@@ -46,9 +46,9 @@ def scrolling_text(text: str, width: int = 16, center=False):
             if start_i > len(text):
                 state = "reset"
             
-        elif state == "reset":
+        if state == "reset":
             start_i = 0
-            end_i = 1
+            end_i = 0
             state = "left"
 
         if center:
