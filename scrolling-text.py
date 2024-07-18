@@ -5,7 +5,7 @@ from shutil import get_terminal_size
 
 ERASE_LINE = "\033[2K\r"
 
-def scrolling_text(text: str, width: int = 16, center=False):
+def scrolling_text(text: str, width: int = 32, center=False):
     start_i = 0
     end_i = 0
     # Finite state machine time
