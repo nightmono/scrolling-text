@@ -63,7 +63,7 @@ def main():
     
     parser = argparse.ArgumentParser("Scrolling text display")
     parser.add_argument("text", nargs="*", help="text that will be scrolled")
-    parser.add_argument("-w", "--width", help="width of the display", type=int)
+    parser.add_argument("-w", "--width", help="width of the display (default: 32)", type=int)
     parser.add_argument("-c", "--center", help="center the display", action="store_true") 
     parser.add_argument("-d", "--delay", help="delay between each screen update in seconds (default: 0.1)", type=float) 
     
