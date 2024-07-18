@@ -5,7 +5,7 @@ from shutil import get_terminal_size
 
 ERASE_LINE = "\033[2K\r"
 
-def scrolling_text(text: str, width: int = 32, center=False):
+def scrolling_text(text: str, width: int = 32, center=False, delay=0.1):
     start_i = 0
     end_i = 0
     # Finite state machine time
@@ -55,7 +55,7 @@ def scrolling_text(text: str, width: int = 32, center=False):
             # `rstrip` to avoid issues when making the terminal width smaller.
             output_line = output_line.center(terminal_width).rstrip()  
         print(f"{ERASE_LINE}{output_line}", end="")
-        time.sleep(0.1)
+        time.sleep(delay)
 
 def main():
     import argparse
@@ -65,6 +65,7 @@ def main():
     parser.add_argument("text", nargs="*", help="text that will be scrolled")
     parser.add_argument("-w", "--width", help="width of the display", type=int)
     parser.add_argument("-c", "--center", help="center the display", action="store_true") 
+    parser.add_argument("-d", "--delay", help="delay between each screen update in seconds (default: 0.1)", type=float) 
     
     args = parser.parse_args()
 
@@ -74,9 +75,10 @@ def main():
         sys.exit()
 
     width = args.width or 32
+    delay = args.delay or 0.1
     
     try:
-        scrolling_text(text, width=width, center=args.center)
+        scrolling_text(text, width=width, center=args.center, delay=delay)
     except KeyboardInterrupt:
         print("\nScrolling text killed.")
 
