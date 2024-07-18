@@ -33,12 +33,23 @@ def scrolling_text(text: str, width: int = 16):
             if end_i == width:
                 state = "mid" 
             
+            if end_i == len(text):
+                state = "mid-short"
+                padding = width - len(text)
+            
         elif state == "mid":
             output_line = f"|{text[start_i:end_i]}|"
             start_i += 1
             end_i += 1
             
             if end_i > len(text):
+                state = "right"
+            
+        elif state == "mid-short":
+            output_line = f"|{' '*padding}{text[start_i:end_i]:<{width-padding}}|" 
+            padding -= 1
+            
+            if padding == 0:
                 state = "right"
             
         elif state == "right":
@@ -57,4 +68,4 @@ def scrolling_text(text: str, width: int = 16):
         time.sleep(0.1)
 
 if __name__ == "__main__":
-    scrolling_text("This is an example")
+    scrolling_text("Example")
