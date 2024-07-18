@@ -22,7 +22,6 @@ def scrolling_text(text: str, width: int = 16):
     start_i = 0
     end_i = 0
     # Finite state machine time
-    # 0:left, 1:mid, 2:right, 3:reset
     # States: left, mid, mid-short, right, reset
     state = "left"
 
