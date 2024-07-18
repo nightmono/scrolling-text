@@ -59,4 +59,7 @@ def scrolling_text(text: str, width: int = 16, center=False):
         time.sleep(0.1)
 
 if __name__ == "__main__":
-    scrolling_text(input("> "), center=True)
+    try:
+        scrolling_text(input("> "), center=True)
+    except KeyboardInterrupt:
+        print("\nScrolling text killed.")
