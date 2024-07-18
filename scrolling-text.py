@@ -58,8 +58,11 @@ def scrolling_text(text: str, width: int = 32, center=False):
         print(f"{ERASE_LINE}{output_line}", end="")
         time.sleep(0.1)
 
-if __name__ == "__main__":
+def main():
     try:
         scrolling_text(input("> "), center=True)
     except KeyboardInterrupt:
         print("\nScrolling text killed.")
+
+if __name__ == "__main__":
+    main()
