@@ -59,8 +59,25 @@ def scrolling_text(text: str, width: int = 32, center=False):
         time.sleep(0.1)
 
 def main():
+    import argparse
+    import sys
+    
+    parser = argparse.ArgumentParser("Scrolling text display")
+    parser.add_argument("text", nargs="*", help="text that will be scrolled")
+    parser.add_argument("-w", "--width", help="width of the display", type=int)
+    parser.add_argument("-c", "--center", help="center the display", action="store_true") 
+    
+    args = parser.parse_args()
+
+    text = " ".join(args.text)    
+    if not text:
+        parser.print_help()
+        sys.exit()
+
+    width = args.width or 16
+    
     try:
-        scrolling_text(input("> "), center=True)
+        scrolling_text(text, width=width, center=args.center)
     except KeyboardInterrupt:
         print("\nScrolling text killed.")
 
