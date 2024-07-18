@@ -18,9 +18,8 @@ def scrolling_text(text: str, width: int = 32, center=False):
             end_i += 1
             
             if end_i == width:
-                state = "mid" 
-            
-            if end_i == len(text):
+                state = "mid"  
+            elif end_i == len(text):
                 state = "mid-short"
                 padding = width - len(text)
             
