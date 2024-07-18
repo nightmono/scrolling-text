@@ -74,7 +74,7 @@ def main():
         parser.print_help()
         sys.exit()
 
-    width = args.width or 16
+    width = args.width or 32
     
     try:
         scrolling_text(text, width=width, center=args.center)
