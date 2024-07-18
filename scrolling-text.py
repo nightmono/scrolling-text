@@ -1,27 +1,62 @@
 #!/usr/bin/python3
 
 import time
+from shutil import get_terminal_size
 
 ERASE_LINE = "\033[2K\r"
 
-def scrolling_text(text: str):
-    frame = 0
-    max_frame = len(text)
+def scrolling_text(text: str, width: int = 16, center=False):
+    start_i = 0
+    end_i = 0
+    # Finite state machine time
+    # States: left, mid, mid-short, right, reset
+    state = "left"
+
     while 1:
-        if frame <= max_frame:
-            output = f"{text[0:frame]:>{max_frame}}"
-        else:
-            output = f"{text[frame-max_frame:max_frame]}"
+        if state == "left":
+            output_line = f"|{text[start_i:end_i]:>{width}}|"
+            end_i += 1
+            
+            if end_i == width:
+                state = "mid" 
+            
+            if end_i == len(text):
+                state = "mid-short"
+                padding = width - len(text)
+            
+        elif state == "mid":
+            output_line = f"|{text[start_i:end_i]}|"
+            start_i += 1
+            end_i += 1
+            
+            if end_i > len(text):
+                state = "right"
+            
+        elif state == "mid-short":
+            output_line = f"|{' '*padding}{text[start_i:end_i]:<{width-padding}}|" 
+            padding -= 1
+            
+            if padding == 0:
+                state = "right"
+            
+        elif state == "right":
+            output_line = f"|{text[start_i:end_i]:<{width}}|"
+            start_i += 1
+            
+            if start_i > len(text):
+                state = "reset"
+            
+        elif state == "reset":
+            start_i = 0
+            end_i = 1
+            state = "left"
 
-        print(f"{ERASE_LINE}{output}", end="")
- 
-        frame += 1
-        if frame > max_frame * 2:
-            frame = 0
-
+        if center:
+            terminal_width = get_terminal_size().columns
+            # `rstrip` to avoid issues when making the terminal width smaller.
+            output_line = output_line.center(terminal_width).rstrip()  
+        print(f"{ERASE_LINE}{output_line}", end="")
         time.sleep(0.1)
 
 if __name__ == "__main__":
-    text = input("> ")
-    print(f"\033[1A", end="")
-    scrolling_text(text)
+    scrolling_text(input("> "), center=True)
