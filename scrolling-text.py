@@ -23,35 +23,36 @@ def scrolling_text(text: str, width: int = 16):
     end_i = 0
     # Finite state machine time
     # 0:left, 1:mid, 2:right, 3:reset
-    state = 0
+    # States: left, mid, mid-short, right, reset
+    state = "left"
 
     while 1:
-        if state == 0:
+        if state == "left":
             output_line = f"|{text[start_i:end_i]:>{width}}|"
             end_i += 1
             
             if end_i == width:
-                state = 1 
+                state = "mid" 
             
-        elif state == 1:
+        elif state == "mid":
             output_line = f"|{text[start_i:end_i]}|"
             start_i += 1
             end_i += 1
             
             if end_i > len(text):
-                state = 2
+                state = "right"
             
-        elif state == 2:
+        elif state == "right":
             output_line = f"|{text[start_i:end_i]:<{width}}|"
             start_i += 1
             
             if start_i > len(text):
-                state = 3
+                state = "reset"
             
-        elif state == 3:
+        elif state == "reset":
             start_i = 0
             end_i = 1
-            state = 0
+            state = "left"
 
         print(f"{ERASE_LINE}{output_line}", end="")
         time.sleep(0.1)
